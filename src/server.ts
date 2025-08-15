@@ -100,7 +100,7 @@ export async function extractTarballAndGetReadme(tarballUrl: string, packageName
 // Create an MCP server
 const server = new McpServer({
   name: 'npm-package-docs-mcp',
-  version: '1.0.0'
+  version: '1.0.1'
 });
 
 // Register the tool
