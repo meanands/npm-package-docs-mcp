@@ -122,7 +122,6 @@ server.registerTool('get_docs_for_npm_package', {
             if (repoPath) {
                 console.error("repoPath", repoPath);
                 const branches = ['master', 'main', 'develop'];
-                let docTxt = '';
                 for (const branch of branches) {
                     try {
                         const response = await fetch(`https://raw.githubusercontent.com/${repoPath}/refs/heads/${branch}/README.md`);
@@ -136,38 +135,29 @@ server.registerTool('get_docs_for_npm_package', {
                         continue;
                     }
                 }
-                if (docTxt) {
-                    return {
-                        content: [{
-                                type: "text",
-                                text: docTxt
-                            }]
-                    };
-                }
-                else {
-                    return {
-                        content: [{
-                                type: "text",
-                                text: "No README found in any of the common branches (master, main, develop)"
-                            }]
-                    };
-                }
-            }
-            else {
-                return {
-                    content: [{
-                            type: "text",
-                            text: "No doc found"
-                        }]
-                };
             }
         }
-        else {
-            docTxt = await extractTarballAndGetReadme(tarball, packageName);
+        if (!docTxt) {
+            try {
+                docTxt = await extractTarballAndGetReadme(tarball, packageName);
+            }
+            catch (error) {
+                console.error('Failed to extract tarball:', error);
+            }
+        }
+        if (docTxt) {
             return {
                 content: [{
                         type: "text",
                         text: docTxt
+                    }]
+            };
+        }
+        else {
+            return {
+                content: [{
+                        type: "text",
+                        text: "No documentation found in any common branches or package tarball"
                     }]
             };
         }

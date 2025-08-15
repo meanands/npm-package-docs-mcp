@@ -121,15 +121,14 @@ server.registerTool(
       const repoUrl = npmPackage.repository?.url; 
       let docTxt = '';
 
-      if(repoUrl){
-        // Extract repository path from GitHub URL
+      // First, try to get docs from GitHub repository if available
+      if (repoUrl) {
         const repoPath = extractGitHubRepoPath(repoUrl);
         if (repoPath) {
           console.error("repoPath", repoPath);
           
           // Try multiple branch names to find the README
           const branches = ['master', 'main', 'develop'];
-          let docTxt = '';
           
           for (const branch of branches) {
             try {
@@ -143,40 +142,33 @@ server.registerTool(
               continue;
             }
           }
-          
-          if (docTxt) {
-            return {
-              content: [{
-                type: "text",
-                text: docTxt
-              }]
-            }
-          } else {
-            return {
-              content:[{
-                type: "text",
-                text: "No README found in any of the common branches (master, main, develop)"
-              }]
-            }
-          }
-        }else{
-          return {
-            content:[{
-              type: "text",
-              text: "No doc found"
-            }]
-          }
         }
-      }else{
-        // Extract tarball and get README content
-        docTxt = await extractTarballAndGetReadme(tarball, packageName);
-        
+      }
+      
+      // If no docs found from GitHub, try tarball fallback
+      if (!docTxt) {
+        try {
+          docTxt = await extractTarballAndGetReadme(tarball, packageName);
+        } catch (error) {
+          console.error('Failed to extract tarball:', error);
+        }
+      }
+      
+      // Return the result
+      if (docTxt) {
         return {
-          content:[{
+          content: [{
             type: "text",
             text: docTxt
           }]
-        }
+        };
+      } else {
+        return {
+          content: [{
+            type: "text",
+            text: "No documentation found in any common branches or package tarball"
+          }]
+        };
       }
       
     } catch (error) {
