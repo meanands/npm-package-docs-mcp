@@ -51,25 +51,13 @@ This MCP tool helps your IDE (like Cursor) get the most current documentation fo
 - Node.js (v16 or higher)
 - Cursor IDE (or any MCP-compatible IDE)
 
-### Setup
+### Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/npm-docs-mcp.git
-   cd npm-docs-mcp
-   ```
+#### Add to Cursor
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=npm-package-docs-mcp&config=eyJjb21tYW5kIjoibnB4IG1lYW5hbmRzL25wbS1wYWNrYWdlLWRvY3MtbWNwIn0%3D)
 
-3. **Build the project**:
-   ```bash
-   npm run build
-   ```
-
-4. **Configure Cursor MCP**:
+#### Add manually to Cursor
 
    Edit your Cursor MCP configuration file (usually located at `~/.cursor/mcp.json`):
 
@@ -79,15 +67,12 @@ This MCP tool helps your IDE (like Cursor) get the most current documentation fo
        "npm-package-docs-mcp": {
          "command": "npx",
          "args": [
-           "ts-node",
-           "/path/to/your/npm-docs-mcp/src/server.ts"
+           "meanands/npm-package-docs-mcp"
          ]
        }
      }
    }
    ```
-
-   **Note**: Replace `/path/to/your/npm-docs-mcp` with the actual absolute path to your cloned repository.
 
 5. **Restart Cursor**: Restart Cursor IDE to load the new MCP server
 
@@ -136,7 +121,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-ISC License - see the LICENSE file for details.
+MIT License - see the LICENSE file for details.
 
 ## Support
 
