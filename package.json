@@ -1,7 +1,7 @@
 {
   "name": "npm-package-docs-mcp",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "author": "Anand Sukumaran Nair",
   "repository": {
     "type": "git",
@@ -13,12 +13,12 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
-    "watch": "nodemon --exec ts-node src/index.ts",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "watch": "nodemon --exec ts-node src/server.ts",
     "clean": "rm -rf dist",
-    "mcp": "node dist/index.js",
-    "mcp:dev": "ts-node src/index.ts",
+    "mcp": "node dist/server.js",
+    "mcp:dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {

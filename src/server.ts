@@ -103,7 +103,7 @@ const server = new McpServer({
   version: '1.0.0'
 });
 
-// Register the get_transcript tool
+// Register the tool
 server.registerTool(
   'get_docs_for_npm_package',
   {
@@ -115,6 +115,7 @@ server.registerTool(
   },
   async ({ packageName }) => {
     try {
+      console.error(`Processing request for package: ${packageName}`);
 
       const npmPackage = await fetch(`https://registry.npmjs.org/${packageName}/latest`).then( res => res.json() as Promise<NpmRegistryResponse>);
       const tarball = npmPackage.dist.tarball;
@@ -172,6 +173,7 @@ server.registerTool(
       }
       
     } catch (error) {
+      console.error('Error in tool execution:', error);
       return {
         content: [{
           type: 'text',
@@ -185,12 +187,48 @@ server.registerTool(
 
 // Start the server
 async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error('NPM Package Docs MCP Server started');
+  try {
+    console.error('Starting NPM Package Docs MCP Server...');
+    
+    const transport = new StdioServerTransport();
+    
+    // Connect to the transport
+    await server.connect(transport);
+    
+    console.error('NPM Package Docs MCP Server started successfully');
+    
+    // Keep the process alive
+    process.on('SIGINT', () => {
+      console.error('Received SIGINT, shutting down gracefully...');
+      process.exit(0);
+    });
+    
+    process.on('SIGTERM', () => {
+      console.error('Received SIGTERM, shutting down gracefully...');
+      process.exit(0);
+    });
+    
+    // Handle uncaught exceptions
+    process.on('uncaughtException', (error) => {
+      console.error('Uncaught exception:', error);
+      process.exit(1);
+    });
+    
+    process.on('unhandledRejection', (reason, promise) => {
+      console.error('Unhandled rejection at:', promise, 'reason:', reason);
+      process.exit(1);
+    });
+    
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
 }
 
-main().catch((error) => {
-  console.error('Failed to start server:', error);
-  process.exit(1);
-});
+// Only run main if this file is being executed directly
+if (require.main === module) {
+  main().catch((error) => {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  });
+}

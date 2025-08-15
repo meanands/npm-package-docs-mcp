@@ -113,6 +113,7 @@ server.registerTool('get_docs_for_npm_package', {
     }
 }, async ({ packageName }) => {
     try {
+        console.error(`Processing request for package: ${packageName}`);
         const npmPackage = await fetch(`https://registry.npmjs.org/${packageName}/latest`).then(res => res.json());
         const tarball = npmPackage.dist.tarball;
         const repoUrl = npmPackage.repository?.url;
@@ -163,6 +164,7 @@ server.registerTool('get_docs_for_npm_package', {
         }
     }
     catch (error) {
+        console.error('Error in tool execution:', error);
         return {
             content: [{
                     type: 'text',
@@ -173,12 +175,37 @@ server.registerTool('get_docs_for_npm_package', {
     }
 });
 async function main() {
-    const transport = new stdio_js_1.StdioServerTransport();
-    await server.connect(transport);
-    console.error('NPM Package Docs MCP Server started');
+    try {
+        console.error('Starting NPM Package Docs MCP Server...');
+        const transport = new stdio_js_1.StdioServerTransport();
+        await server.connect(transport);
+        console.error('NPM Package Docs MCP Server started successfully');
+        process.on('SIGINT', () => {
+            console.error('Received SIGINT, shutting down gracefully...');
+            process.exit(0);
+        });
+        process.on('SIGTERM', () => {
+            console.error('Received SIGTERM, shutting down gracefully...');
+            process.exit(0);
+        });
+        process.on('uncaughtException', (error) => {
+            console.error('Uncaught exception:', error);
+            process.exit(1);
+        });
+        process.on('unhandledRejection', (reason, promise) => {
+            console.error('Unhandled rejection at:', promise, 'reason:', reason);
+            process.exit(1);
+        });
+    }
+    catch (error) {
+        console.error('Failed to start server:', error);
+        process.exit(1);
+    }
 }
-main().catch((error) => {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-});
+if (require.main === module) {
+    main().catch((error) => {
+        console.error('Failed to start server:', error);
+        process.exit(1);
+    });
+}
 //# sourceMappingURL=server.js.map
