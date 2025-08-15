@@ -21,6 +21,9 @@
     "mcp:dev": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "npm-package-docs-mcp": "./dist/server.js"
+  },
   "keywords": ["mcp", "npm", "package", "docs", "documentation"],
   "license": "MIT",
   "description": "A Model Context Protocol (MCP) tool that provides up-to-date documentation for npm packages directly in your IDE. This tool fetches the latest README documentation from either the package's GitHub repository or the README bundled with the npm package itself.",
