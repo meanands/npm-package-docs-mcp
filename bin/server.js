@@ -103,7 +103,7 @@ async function extractTarballAndGetReadme(tarballUrl, packageName) {
 }
 const server = new mcp_js_1.McpServer({
     name: 'npm-package-docs-mcp',
-    version: '1.0.0'
+    version: '1.0.1'
 });
 server.registerTool('get_docs_for_npm_package', {
     title: 'Get docs for an npm package',
