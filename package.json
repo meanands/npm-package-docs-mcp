@@ -22,7 +22,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "npm-package-docs-mcp": "node ./bin/server.js"
+    "npm-package-docs-mcp": "./bin/server.js"
   },
   "keywords": ["mcp", "npm", "package", "docs", "documentation"],
   "license": "MIT",
