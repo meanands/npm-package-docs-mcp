@@ -1,0 +1,41 @@
+{
+  "name": "npm-package-docs-mcp",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Anand Sukumaran Nair",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anandsme/npm-package-docs-mcp"
+  },
+  "homepage": "https://github.com/anandsme/npm-package-docs-mcp",
+  "bugs": {
+    "url": "https://github.com/anandsme/npm-package-docs-mcp/issues"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "watch": "nodemon --exec ts-node src/index.ts",
+    "clean": "rm -rf dist",
+    "mcp": "node dist/index.js",
+    "mcp:dev": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["mcp", "npm", "package", "docs", "documentation"],
+  "license": "MIT",
+  "description": "A Model Context Protocol (MCP) tool that provides up-to-date documentation for npm packages directly in your IDE. This tool fetches the latest README documentation from either the package's GitHub repository or the README bundled with the npm package itself.",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.3",
+    "@types/fs-extra": "^11.0.4",
+    "fs-extra": "^11.3.1",
+    "tar": "^7.4.3",
+    "zod": "^3.25.76"
+  }
+}
