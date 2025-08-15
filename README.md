@@ -1,4 +1,4 @@
-# npm-package-docs-mcp
+# NPM Package Docs MCP
 
 A Model Context Protocol (MCP) tool that provides up-to-date documentation for npm packages directly in your IDE. This tool fetches the latest README documentation from either the package's GitHub repository or the README bundled with the npm package itself.
 
