@@ -2,6 +2,10 @@
 
 A Model Context Protocol (MCP) tool that provides up-to-date documentation for npm packages directly in your IDE. This tool fetches the latest README documentation from either the package's GitHub repository or the README bundled with the npm package itself.
 
+<a href="https://glama.ai/mcp/servers/@meanands/npm-package-docs-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@meanands/npm-package-docs-mcp/badge" alt="NPM Package Docs MCP server" />
+</a>
+
 ## What it does
 
 This MCP tool helps your IDE (like Cursor) get the most current documentation for any npm package instead of relying on outdated or incomplete information. It works by:
